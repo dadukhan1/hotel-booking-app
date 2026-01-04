@@ -1,9 +1,15 @@
-import React from 'react'
+import React from "react";
+import Navbar from "./components/Navbar";
+import { useLocation } from "react-router-dom";
 
 const App = () => {
-  return (
-    <div className='text-3xl font-bold underline'>App</div>
-  )
-}
+  const isOwnerPath = useLocation().pathname.includes("owner");
 
-export default App
+  return (
+    <div className="text-3xl font-bold underline">
+      {!isOwnerPath && <Navbar />}
+    </div>
+  );
+};
+
+export default App;
