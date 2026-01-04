@@ -4,7 +4,7 @@ import { assets, exclusiveOffers } from "../assets/assets";
 
 const ExclusiveOffers = () => {
   return (
-    <div className="flex flex-col items-center px-6 md:px-16 lg:px-24 xl:px-32 pt-20 placeholder-blue-300">
+    <div className="flex flex-col items-center px-6 md:px-16 lg:px-24 xl:px-32 pt-20 placeholder-blue-300 mb-24">
       <div className="flex flex-col md:flex-row items-center justify-between w-full">
         <Title
           align="left"
