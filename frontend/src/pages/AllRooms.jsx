@@ -34,7 +34,7 @@ const AllRooms = () => {
   const navigate = useNavigate();
   const [openFilters, setOpenFilters] = useState(false);
 
-  const roomTypes = ["Single Bed", "Double Bed", "Luxury Bed", "Family Bed"];
+  const roomTypes = ["Single Bed", "Double Bed", "Luxury Room", "Family Suit"];
 
   const priceRanges = [
     "0 to 500",
