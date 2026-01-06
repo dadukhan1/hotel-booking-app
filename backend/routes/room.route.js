@@ -2,6 +2,7 @@ import express from "express";
 import upload from "../middlewares/multer.middleware.js";
 import {
   createRoom,
+  getOwnerRooms,
   getRooms,
   toggleRoomAvailability,
 } from "../controllers/room.controller.js";
