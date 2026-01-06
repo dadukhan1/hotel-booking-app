@@ -1,7 +1,7 @@
 import User from "../models/User.js";
 import { Webhook } from "svix";
 
-const clerkWebHooks = async (req, res) => {
+const clerkWebhooks = async (req, res) => {
   try {
     // Create a svix webhook instance with clerk webhook secret.
     const whook = new Webhook(process.env.CLERK_WEBHOOK_SECRET);
@@ -51,4 +51,4 @@ const clerkWebHooks = async (req, res) => {
   }
 };
 
-export default clerkWebHooks;
+export default clerkWebhooks;

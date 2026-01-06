@@ -3,7 +3,7 @@ import "dotenv/config";
 import cors from "cors";
 import connectDB from "./configs/db.js";
 import { clerkMiddleware } from "@clerk/express";
-import clerkWebHooks from "./controllers/clerkWebHooks.js";
+import clerkWebHooks from "./controllers/clerkWebhooks.js";
 
 connectDB();
 
@@ -16,6 +16,9 @@ app.use("/api/clerk", clerkWebHooks);
 
 app.get("/", (req, res) => {
   res.send("Hello world!");
+});
+app.get("/test", (req, res) => {
+  res.send("Hello test!");
 });
 
 const PORT = process.env.PORT || 3000;
