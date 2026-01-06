@@ -8,6 +8,7 @@ import clerkWebHooks from "./controllers/clerkWebhooks.js";
 import userRouter from "./routes/user.route.js";
 import hotelRouter from "./routes/hotel.route.js";
 import roomRouter from "./routes/room.route.js";
+import bookingRouter from "./routes/booking.route.js";
 
 connectDB();
 connectCloudinary();
@@ -28,6 +29,7 @@ app.get("/test", (req, res) => {
 app.use("/api/user", userRouter);
 app.use("/api/hotel", hotelRouter);
 app.use("/api/room", roomRouter);
+app.use("/api/bookings", bookingRouter);
 
 const PORT = process.env.PORT || 3000;
 
