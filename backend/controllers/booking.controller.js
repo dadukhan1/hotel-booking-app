@@ -1,5 +1,4 @@
-/** @format */
-
+import transporter from "../configs/nodemailer.js";
 import Booking from "../models/Booking.js";
 import Hotel from "../models/Hotel.js";
 import Room from "../models/Room.js";
@@ -22,9 +21,9 @@ const checkAvailability = async ({ checkInDate, checkOutDate, room }) => {
 // api to check Availability of room
 export const checkAvailabilityAPI = async (req, res) => {
   try {
-    const { room, checkInData, checkOutDate } = req.body;
+    const { room, checkInDate, checkOutDate } = req.body;
     const isAvailable = await checkAvailability({
-      checkInData,
+      checkInDate,
       checkOutDate,
       room,
     });
@@ -70,6 +69,33 @@ export const createBooking = async (req, res) => {
       checkOutDate,
       totalPrice,
     });
+
+    // Mark room as unavailable
+    await Room.findByIdAndUpdate(room, { available: false });
+
+    const mailOptions = {
+      from: process.env.SENDER_EMAIL,
+      to: req.user.email,
+      subject: "Hotel Booking Details",
+      html: `
+        <h2>Your Booking Details</h2>
+        <p>Dear ${req.user.username},</p>
+        <p>Thank you for yor booking! Here are your details:</p>
+        <ul>
+          <li> <strong>Booking ID: ${booking._id}</strong></li>
+          <li> <strong>Hotel Name: ${roomData.hotel.name}</strong></li>
+          <li> <strong>Location: ${roomData.hotel.address}</strong></li>
+          <li> <strong>Date: ${booking.checkInDate.toDateString()}</strong></li>
+          <li> <strong>Booking Amount: ${process.env.CURRENCY} ${
+        booking.totalPrice
+      } /night</strong></li>
+        </ul>
+        <p>We look forward to welcoming you!</p>
+        <p>If you need to make any changes, feel free to contact us.</p>
+      `,
+    };
+
+    await transporter.sendMail(mailOptions);
 
     return res.json({ success: true, message: "Booking created successfully" });
   } catch (error) {
