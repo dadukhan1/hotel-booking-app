@@ -15,7 +15,7 @@ const BookingSchema = new Schema(
       default: "pending",
     },
     paymentMethod: { type: String, required: true, default: "Pay At Hotel" },
-    isPaid: { type: Boolean, default: true },
+    isPaid: { type: Boolean, default: false },
   },
   { timestamps: true }
 );
