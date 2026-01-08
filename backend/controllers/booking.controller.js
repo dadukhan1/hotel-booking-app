@@ -1,9 +1,11 @@
+/** @format */
+
 import Booking from "../models/Booking.js";
 import Hotel from "../models/Hotel.js";
 import Room from "../models/Room.js";
 
 // function to check availability of room
-const checkAvailability = async ({ checkInData, checkOutDate, room }) => {
+const checkAvailability = async ({ checkInDate, checkOutDate, room }) => {
   try {
     const bookings = await Booking.find({
       room,
@@ -49,14 +51,14 @@ export const createBooking = async (req, res) => {
       return res.json({ success: false, message: "Room is not available" });
     }
     // totalprice from Room (model)
-    const roomData = await Room.findById({ room }).populate("hotel");
-    const totalPrice = roomData.pricePerNight;
+    const roomData = await Room.findById(room).populate("hotel");
+    let totalPrice = roomData.pricePerNight;
 
     // total price per night
     const checkIn = new Date(checkInDate);
     const checkOut = new Date(checkOutDate);
     const timeDiff = checkOut.getTime() - checkIn.getTime();
-    const nights = Math.ceil((timeDiff / 1000) * 3600 * 24);
+    const nights = Math.ceil(timeDiff / (1000 * 3600 * 24));
 
     totalPrice *= nights;
     const booking = await Booking.create({
@@ -71,7 +73,7 @@ export const createBooking = async (req, res) => {
 
     return res.json({ success: true, message: "Booking created successfully" });
   } catch (error) {
-    console.log(error);
+    console.log(error.message);
     res.json({ success: false, message: "Failed to create booking." });
   }
 };
@@ -80,7 +82,7 @@ export const createBooking = async (req, res) => {
 export const getUserBookings = async (req, res) => {
   try {
     const user = req.user._id;
-    const bookings = await Booking.find({ user }).populate("room, hotel").sort({
+    const bookings = await Booking.find({ user }).populate("room hotel").sort({
       createAt: -1,
     });
 
@@ -92,7 +94,7 @@ export const getUserBookings = async (req, res) => {
 
 export const getHotelBookings = async (req, res) => {
   try {
-    const hotel = await Hotel.findOne({ owner: req.auth.userId });
+    const hotel = await Hotel.findOne({ owner: req.auth().userId });
     if (!hotel) {
       return res.json({ success: false, message: "No Hotel found" });
     }
@@ -103,7 +105,8 @@ export const getHotelBookings = async (req, res) => {
     const totalBookings = bookings.length;
     // total revenue
     const totalRevenue = bookings.reduce(
-      (acc, booking) => acc + booking.totalPrice
+      (acc, booking) => acc + booking.totalPrice,
+      0
     );
 
     res.json({
@@ -111,6 +114,7 @@ export const getHotelBookings = async (req, res) => {
       dashboardData: { totalBookings, totalRevenue, bookings },
     });
   } catch (error) {
+    console.log(error.message);
     return res.json({
       success: false,
       message: "Failed to fetch bookings",
