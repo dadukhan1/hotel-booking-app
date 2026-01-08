@@ -83,7 +83,7 @@ export const getUserBookings = async (req, res) => {
   try {
     const user = req.user._id;
     const bookings = await Booking.find({ user }).populate("room hotel").sort({
-      createAt: -1,
+      createdAt: -1,
     });
 
     res.json({ success: true, bookings });
@@ -99,7 +99,7 @@ export const getHotelBookings = async (req, res) => {
       return res.json({ success: false, message: "No Hotel found" });
     }
     const bookings = await Booking.find({ hotel: hotel._id })
-      .populate("room, hotel, user")
+      .populate("room hotel user")
       .sort({ createdAt: -1 });
     // total bookings
     const totalBookings = bookings.length;
