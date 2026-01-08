@@ -66,7 +66,7 @@ export const AppProvider = ({ children }) => {
 
 
 
-  const value = { currency, navigate, user, getToken, isOwner, axios, showHotelReg, setShowHotelReg, searchedCities, setSearchedCities, isOwner, setIsOwner, rooms, setRooms };
+  const value = { currency, navigate, user, getToken, axios, showHotelReg, setShowHotelReg, searchedCities, setSearchedCities, isOwner, setIsOwner, rooms, setRooms };
   return <AppContext.Provider value={value}>
     {children}
   </AppContext.Provider>;
