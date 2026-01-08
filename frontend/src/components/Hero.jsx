@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import heroImage from "../assets/heroImage.png";
 import { assets, cities } from "../assets/assets";
-import { useAppContext } from "../context/appContext";
+import { useAppContext } from "../context/AppContext.jsx";
 
 const Hero = () => {
   const { getToken, navigate, axios, setSearchedCities } = useAppContext();

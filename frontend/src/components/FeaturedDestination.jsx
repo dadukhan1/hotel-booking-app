@@ -1,6 +1,6 @@
 import HotelCard from "./HotelCard";
 import Title from "./Title";
-import { useAppContext } from "../context/appContext";
+import { useAppContext } from "../context/AppContext.jsx";
 
 const FeaturedDestination = () => {
   const { rooms, navigate } = useAppContext();

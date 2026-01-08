@@ -3,7 +3,7 @@ import Title from "../components/Title";
 import { assets, facilityIcons, roomsDummyData } from "../assets/assets";
 import { useSearchParams } from "react-router-dom";
 import StarRating from "../components/StarRating";
-import { useAppContext } from "../context/appContext";
+import { useAppContext } from "../context/AppContext.jsx";
 
 const CheckBox = ({ label, selected = false, onChange = () => { } }) => {
   return (

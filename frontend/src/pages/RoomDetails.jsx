@@ -7,7 +7,7 @@ import {
   roomsDummyData,
 } from "../assets/assets";
 import StarRating from "../components/StarRating";
-import { useAppContext } from "../context/appContext";
+import { useAppContext } from "../context/AppContext.jsx";
 import toast from "react-hot-toast";
 
 const RoomDetails = () => {
