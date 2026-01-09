@@ -9,16 +9,25 @@ import userRouter from "./routes/user.route.js";
 import hotelRouter from "./routes/hotel.route.js";
 import roomRouter from "./routes/room.route.js";
 import bookingRouter from "./routes/booking.route.js";
+import { stripeWebhooks } from "./controllers/stripeWebhooks.js";
 
 connectDB();
 connectCloudinary();
 
 const app = express();
 app.use(cors());
+
+// API to listen to Stripe Webhooks
+app.post(
+  "/api/stripe",
+  express.raw({ type: "application/json" }),
+  stripeWebhooks
+);
+
+app.use("/api/clerk", clerkWebHooks);
 app.use(express.json());
 app.use(clerkMiddleware());
 // api to listen clerk webhooks
-app.use("/api/clerk", clerkWebHooks);
 
 app.get("/", (req, res) => {
   res.send("Hello world!");
