@@ -24,10 +24,10 @@ app.post(
   stripeWebhooks
 );
 
-app.use("/api/clerk", clerkWebHooks);
 app.use(express.json());
 app.use(clerkMiddleware());
 // api to listen clerk webhooks
+app.use("/api/clerk", clerkWebHooks);
 
 app.get("/", (req, res) => {
   res.send("Hello world!");
