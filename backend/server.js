@@ -15,7 +15,13 @@ connectDB();
 connectCloudinary();
 
 const app = express();
-app.use(cors());
+app.use(cors({
+  origin: [
+    'https://hotel-booking-frontend-rosy.vercel.app',
+    'http://localhost:3000' // for local development
+  ],
+  credentials: true
+}));
 
 // API to listen to Stripe Webhooks
 app.post(
